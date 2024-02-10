@@ -9,7 +9,12 @@ export default function Main({}: Props) {
   const [textInput, setTextInput] = useState<string>('');
 
   const words = wordsInput.split(' ');
-  const wordsNotFound = words.filter((word) => !textInput.includes(word));
+  const wordsNotFound = words.filter((word) => {
+    const textInputWithoutPunctuation = textInput
+      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+      .toLowerCase();
+    return !textInputWithoutPunctuation.includes(word.toLowerCase());
+  });
 
   return (
     <div className='grid grid-cols-3 grid-rows-2 gap-6 w-full'>
